@@ -9,6 +9,10 @@ const initialValues = {
     channel: "",
     description: "",
     address: "",
+    social:{
+        facebook:"",
+        twitter:""
+    }
 };
 const onSubmit = values => {
     console.log("values", values);
@@ -20,6 +24,10 @@ const validationSchema = yup.object().shape({
     channel: yup.string().required("Required"),
     description: yup.string().optional(),
     address: yup.string().required("Required"),
+    social:yup.object({
+        facebook:yup.string().required("Required"),
+        twitter:yup.string().required("Required"),
+    })
 });
 const YouTubeForm = () => {
     return (
@@ -62,7 +70,7 @@ const YouTubeForm = () => {
                     <Field name={"address"}>
                         {props => {
                             const { field, from, meta } = props;
-                            console.log(props);
+                            // console.log(props);
                             return (
                                 <div>
                                     <textarea
@@ -78,6 +86,18 @@ const YouTubeForm = () => {
                         }}
                     </Field>
                     {/*<ErrorMessage name={"address"}  component={TextError}/>*/}
+                </div>
+
+                <div className={"form-control"}>
+                    <label htmlFor="facebook">Facebook</label>
+                    <Field type="text" id={"facebook"} name={"social.facebook"} />
+                    <ErrorMessage name={"social.facebook"} component={TextError} />
+                </div>
+
+                <div className={"form-control"}>
+                    <label htmlFor="twitter">Twitter</label>
+                    <Field type="text" id={"twitter"} name={"social.twitter"} />
+                    <ErrorMessage name={"social.twitter"} component={TextError} />
                 </div>
 
                 <button type={"submit"}>Submit</button>
