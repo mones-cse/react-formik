@@ -1,6 +1,7 @@
 import React from "react";
 import { Form, Formik, Field, ErrorMessage } from "formik";
 import * as yup from "yup";
+import TextError from "./TextError";
 
 const initialValues = {
     name: "",
@@ -18,7 +19,7 @@ const validationSchema = yup.object().shape({
     email: yup.string().email("invalid email format").required("Required"),
     channel: yup.string().required("Required"),
     description: yup.string().optional(),
-    address:yup.string().required("Required")
+    address: yup.string().required("Required"),
 });
 const YouTubeForm = () => {
     return (
@@ -31,17 +32,19 @@ const YouTubeForm = () => {
                 <div className={"form-control"}>
                     <label htmlFor="name">Name</label>
                     <Field type="text" id={"name"} name={"name"} />
-                    <ErrorMessage name={"name"} />
+                    <ErrorMessage name={"name"} component={TextError} />
                 </div>
                 <div className={"form-control"}>
                     <label htmlFor="email">Email</label>
                     <Field type="email" name={"email"} id={"email"} />
-                    <ErrorMessage name={"email"} />
+                    <ErrorMessage name={"email"}>
+                        {error => <div style={{ color: "red" }}> {error}</div>}
+                    </ErrorMessage>
                 </div>
                 <div className={"form-control"}>
                     <label htmlFor="channel">Channel</label>
                     <Field type="text" id={"channel"} name={"channel"} />
-                    <ErrorMessage name={"channel"} />
+                    <ErrorMessage name={"channel"} component={TextError} />
                 </div>
                 <div className={"form-control"}>
                     <label htmlFor="channel">Description</label>
@@ -52,7 +55,7 @@ const YouTubeForm = () => {
                         as={"textarea"}
                         style={{ height: "100px" }}
                     />
-                    <ErrorMessage name={"description"} />
+                    <ErrorMessage name={"description"} component={TextError} />
                 </div>
                 <div className={"form-control"}>
                     <label htmlFor="address">Address</label>
@@ -62,17 +65,19 @@ const YouTubeForm = () => {
                             console.log(props);
                             return (
                                 <div>
-                                    <input
+                                    <textarea
                                         type="text"
                                         id={"address"}
                                         {...field}
                                     />
-                                    {meta.touched && meta.error && <div>{meta.error}</div>}
+                                    {meta.touched && meta.error && (
+                                        <div>{meta.error}</div>
+                                    )}
                                 </div>
                             );
                         }}
                     </Field>
-                    <ErrorMessage name={"description"} />
+                    {/*<ErrorMessage name={"address"}  component={TextError}/>*/}
                 </div>
 
                 <button type={"submit"}>Submit</button>
