@@ -12,7 +12,8 @@ const initialValues = {
     social:{
         facebook:"",
         twitter:""
-    }
+    },
+    phoneNumbers:['','']
 };
 const onSubmit = values => {
     console.log("values", values);
@@ -20,14 +21,16 @@ const onSubmit = values => {
 
 const validationSchema = yup.object().shape({
     name: yup.string().required("Required"),
-    email: yup.string().email("invalid email format").required("Required"),
+    // email: yup.string().email("invalid email format").required("Required"),
+    email: yup.string().email("invalid email format").optional(),
     channel: yup.string().required("Required"),
     description: yup.string().optional(),
     address: yup.string().required("Required"),
     social:yup.object({
         facebook:yup.string().required("Required"),
         twitter:yup.string().required("Required"),
-    })
+    }),
+
 });
 const YouTubeForm = () => {
     return (
@@ -79,7 +82,7 @@ const YouTubeForm = () => {
                                         {...field}
                                     />
                                     {meta.touched && meta.error && (
-                                        <div>{meta.error}</div>
+                                        <div style={{color:'red'}}>{meta.error}</div>
                                     )}
                                 </div>
                             );
@@ -99,6 +102,21 @@ const YouTubeForm = () => {
                     <Field type="text" id={"twitter"} name={"social.twitter"} />
                     <ErrorMessage name={"social.twitter"} component={TextError} />
                 </div>
+
+                <div className={"form-control"}>
+                    <label htmlFor="PrimaryPhoneNumber">Primary Phone Number</label>
+                    <Field type="text" id={"PrimaryPhoneNumber"} name={"phoneNumbers[0]"} />
+                    <ErrorMessage name={"phoneNumbers[0]"} component={TextError} />
+                </div>
+
+
+                <div className={"form-control"}>
+                    <label htmlFor="SecondaryPhoneNumber">Secondary Phone Number</label>
+                    <Field type="text" id={"SecondaryPhoneNumber"} name={"phoneNumbers[1]"} />
+                    <ErrorMessage name={"phoneNumbers[1]"} component={TextError} />
+                </div>
+
+
 
                 <button type={"submit"}>Submit</button>
             </Form>
